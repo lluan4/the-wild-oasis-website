@@ -8,23 +8,27 @@ import {
   parseISO,
 } from 'date-fns';
 import DeleteReservation from '../deleteReservation/DeleteReservation';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface ReservationCardProps {
   booking: {
     id: number;
-    guestId: number;
-    startDate: string;
-    endDate: string;
-    numNights: number;
-    totalPrice: number;
-    numGuests: number;
-    status: string;
     created_at: string;
+    startDate: string | null;
+    endDate: string | null;
+    numNights: number | null;
+    numGuests: number | null;
+    totalPrice: number | null;
+    guestId: number | null;
+    cabinId: number | null;
+    status: string | null;
     cabins: {
-      name: string;
-      image: string;
-    };
+      name: string | null;
+      image: string | null;
+    } | null;
   };
+  onDelete: (bookingId: number) => void;
 }
 
 export const formatDistanceFromNow = (dateStr: string) => {
@@ -33,7 +37,7 @@ export const formatDistanceFromNow = (dateStr: string) => {
   }).replace('about ', '');
 };
 
-function ReservationCard({ booking }: ReservationCardProps) {
+function ReservationCard({ booking, onDelete }: ReservationCardProps) {
   const {
     id,
     guestId,
@@ -44,8 +48,26 @@ function ReservationCard({ booking }: ReservationCardProps) {
     numGuests,
     status,
     created_at,
-    cabins: { name, image },
+    cabins,
   } = booking;
+
+  const { name, image } = cabins || {
+    name: null,
+    image: null,
+  };
+
+  if (
+    startDate === null ||
+    endDate === null ||
+    numNights === null ||
+    numGuests === null ||
+    totalPrice === null ||
+    name === null ||
+    image === null
+  )
+    throw new Error(
+      'Booking does not have a start date, end date, number of nights, number of guests, total price, name, or image.'
+    );
 
   const displayDate = isToday(new Date(startDate ?? ''))
     ? 'Today'
@@ -56,9 +78,10 @@ function ReservationCard({ booking }: ReservationCardProps) {
   return (
     <div className="flex border border-primary-800">
       <div className="relative h-32 aspect-square">
-        <img
+        <Image
           src={image}
           alt={`Cabin ${name}`}
+          layout="fill"
           className="object-cover border-r border-primary-800"
         />
       </div>
@@ -97,14 +120,18 @@ function ReservationCard({ booking }: ReservationCardProps) {
       </div>
 
       <div className="flex flex-col border-l border-primary-800 w-[100px]">
-        <a
-          href={`/account/reservations/edit/${id}`}
-          className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
-        >
-          <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
-          <span className="mt-1">Edit</span>
-        </a>
-        <DeleteReservation bookingId={id} />
+        {!isPast(startDate) ? (
+          <>
+            <Link
+              href={`/account/reservations/edit/${id}`}
+              className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
+            >
+              <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
+              <span className="mt-1">Edit</span>
+            </Link>
+            <DeleteReservation bookingId={id} onDelete={onDelete} />
+          </>
+        ) : null}
       </div>
     </div>
   );

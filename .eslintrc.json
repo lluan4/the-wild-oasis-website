@@ -9,6 +9,7 @@
   ],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "warning",
+    "react/react-in-jsx-scope": "off"
   }
 }

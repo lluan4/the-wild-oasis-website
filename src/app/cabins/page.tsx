@@ -1,7 +1,22 @@
-import { CabinList, Spinner } from '@/_components';
+import { CabinList, Filter, ReservationReminder, Spinner } from '@/_components';
 import { Suspense } from 'react';
 
-export default function Page() {
+// export const revalidate = 3600;
+// export const revalidate = 0;
+
+export const metadata = {
+  title: 'Cabins',
+};
+
+interface PageProps {
+  searchParams?: {
+    capacity?: string;
+  };
+}
+
+export default function Page({ searchParams }: PageProps) {
+  const filter = searchParams?.capacity ?? 'all';
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -16,9 +31,12 @@ export default function Page() {
         away from home. The perfect spot for a peaceful, calm vacation. Welcome
         to paradise.
       </p>
-
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+      <Suspense fallback={<Spinner />} key={filter}>
+        <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
