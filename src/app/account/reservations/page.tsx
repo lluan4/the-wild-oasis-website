@@ -1,7 +1,6 @@
-import { ReservationCard, ReservationList } from '@/_components';
+import { ReservationList } from '@/_components';
 import { auth } from '@/_lib/auth';
 import { getBookings } from '@/services/data-service';
-import React from 'react';
 
 export const metadata = {
   title: 'Reservations',

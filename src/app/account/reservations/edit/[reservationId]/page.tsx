@@ -3,7 +3,6 @@
 import { SubmitButton } from '@/_components';
 import { updateBookingAction } from '@/_lib/actions';
 import { getBooking, getCabin } from '@/services/data-service';
-import { useFormStatus } from 'react-dom';
 
 interface ReservationParams {
   reservationId: string;

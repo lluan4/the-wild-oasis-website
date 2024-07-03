@@ -7,7 +7,7 @@ import {
   isSameDay,
   isWithinInterval,
 } from 'date-fns';
-import { useState } from 'react';
+
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
@@ -42,7 +42,6 @@ type Settings = {
 };
 
 function DateSelector({
-  settings,
   bookedDates,
   cabin,
 }: {

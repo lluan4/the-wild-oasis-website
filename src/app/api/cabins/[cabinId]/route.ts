@@ -36,9 +36,10 @@ export async function GET(
       status: 200,
       headers,
     });
-  } catch (error: any) {
+  } catch (error) {
+    const typedError = error as Error;
     return new Response(
-      JSON.stringify({ message: error.message || 'An error occurred' }),
+      JSON.stringify({ message: typedError.message || 'An error occurred' }),
       {
         status: 500,
         headers,

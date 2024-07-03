@@ -6,7 +6,7 @@ const josefin = Josefin_Sans({
 });
 
 import '@/_styles/globals.css';
-import { Header, Reservation } from '@/_components';
+import { Header } from '@/_components';
 import { ReservationProvider } from '@/context/reservationContext/ReservationContext';
 
 export const metadata = {
