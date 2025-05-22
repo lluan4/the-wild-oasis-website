@@ -1,8 +1,10 @@
 name: Keep Supabase Awake
 
 on:
+  # para disparar manualmente em Actions » Run workflow
+  workflow_dispatch:
+  # agendamento semanal
   schedule:
-    # todo domingo à 00:00 UTC (ajuste conforme preferir)
     - cron: '0 0 * * 0'
 
 jobs:
