@@ -1,21 +1,19 @@
 name: Keep Supabase Awake
 
 on:
-  # para disparar manualmente em Actions » Run workflow
   workflow_dispatch:
-  # agendamento semanal
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '*/1 * * * *'
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase REST
+      - name: Ping Supabase e mostrar body
         run: |
           echo "⏱️  Ping at $(date)"
-          curl -sS \
+          RESPONSE=$(curl -s \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/cabins?select=id&limit=1" \
-            || echo "Ping falhou, mas ignoro para não quebrar a Action"
+            "${{ secrets.SUPABASE_URL }}/rest/v1/cabins?select=id&limit=1")
+          echo "📬 Response body: $RESPONSE"
