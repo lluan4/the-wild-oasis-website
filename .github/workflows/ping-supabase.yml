@@ -1,9 +1,8 @@
 name: Keep Supabase Awake
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '*/1 * * * *'   # rodando a cada 1 minutos (mínimo suportado)
 
 jobs:
   ping:
@@ -11,7 +10,7 @@ jobs:
     steps:
       - name: Ping Supabase e mostrar body
         run: |
-          echo "⏱️  Ping at $(date)"
+          echo "⏱️ Ping at $(date)"
           RESPONSE=$(curl -s \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
