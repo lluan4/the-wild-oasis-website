@@ -1,4 +1,5 @@
 import { auth } from '@/_lib/auth';
+
 import Link from 'next/link';
 
 export default async function Navigation() {
@@ -15,10 +16,10 @@ export default async function Navigation() {
             Cabins
           </Link>
         </li>
-        <li>
+        <li className="hidden md:block">
           <Link
             href="/about"
-            className="hover:text-accent-400 transition-colors"
+            className=" hover:text-accent-400 transition-colors"
           >
             About
           </Link>

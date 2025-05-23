@@ -66,7 +66,7 @@ function DateSelector({
   const maxBookingLength = 23;
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between  gap-y-6 md:gap-0">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
@@ -78,6 +78,10 @@ function DateSelector({
         fromDate={new Date()}
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
+        classNames={{
+          months: 'grid grid-cols-1 sm:grid-cols-2 gap-4 justify-start',
+          month: 'w-full text-left',
+        }}
         numberOfMonths={2}
         disabled={(curDate) =>
           isPast(curDate) ||

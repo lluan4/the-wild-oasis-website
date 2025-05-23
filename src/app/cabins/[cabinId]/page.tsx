@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: CabinParams }) {
   // ]);
 
   return (
-    <div className="max-w-6xl mt-8 mx-auto">
+    <div className="w-full box-border max-w-full overflow-hidden min-w-[360px] mr-3">
       <Cabin cabin={cabin} />
       <div>
         <h2 className="mb-10 text-accent-400 text-5xl font-semibold text-center">
